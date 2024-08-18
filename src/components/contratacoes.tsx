@@ -99,7 +99,7 @@ export function ContratacoesPage({ contratacao, error }: ContratacoesPageProps) 
             <td className="py-2 px-4 border-b">{contratacao.objetoCompra}</td>
           </tr>
           <tr>
-            <th className="py-2 px-4 border-r">Informação Complementar</th>
+            <th className="py-2 px-4 border-r">Informação</th>
             <td className="py-2 px-4 border-b">{contratacao.informacaoComplementar}</td>
           </tr>
         </tbody>
