@@ -1,7 +1,7 @@
 'use client';
 
 import { ApiProvider, useApi } from "./context/ApiContext";
-import { ContratacoesPage } from "@/components/contratacoes";
+import { TablePage } from "@/components/contratacoes";
 
 const HomePage: React.FC = () => {
   const { contracts, loading, error } = useApi();
@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <ContratacoesPage contratacao={contracts} />  
+      <TablePage contratacoes={contracts} /> 
     </div>
   );
 };
