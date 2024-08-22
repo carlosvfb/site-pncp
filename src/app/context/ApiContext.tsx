@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { fetchContracts } from '../lib/api';
 import { Contratacao } from '@/components/contratacoes';
 
-interface ApiContextProps {
+export interface ApiContextProps {
   contracts: Contratacao[];
   loading: boolean;
   error: string | null;
@@ -21,13 +21,10 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const loadContracts = async () => {
       try {
         const data = await fetchContracts();
+        console.log(data)
         setContracts(data);
       } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('Failed to fetch contracts');
-        }
+        setError('Failed to fetch contracts');
       } finally {
         setLoading(false);
       }
@@ -37,7 +34,7 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, []);
 
   return (
-    <ApiContext.Provider value={{ contracts, loading, error }}>
+    <ApiContext.Provider value={{ contracts, loading, error}}>
       {children}
     </ApiContext.Provider>
   );

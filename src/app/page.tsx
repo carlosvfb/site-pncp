@@ -5,15 +5,12 @@ import { TablePage } from "@/components/contratacoes";
 
 const HomePage: React.FC = () => {
   const { contracts, loading, error } = useApi();
-
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  return (
-    <div>
-      <TablePage contratacoes={contracts} /> 
-    </div>
-  );
+  return <TablePage contratacoes={contracts} /> 
+  
 };
 
 const PageWithProvider: React.FC = () => (

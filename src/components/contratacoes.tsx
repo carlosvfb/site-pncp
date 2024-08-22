@@ -1,3 +1,6 @@
+'use client';
+
+import Link from 'next/link';
 import React from 'react';
 
 export interface Contratacao {
@@ -6,6 +9,7 @@ export interface Contratacao {
   numeroCompra: number;
   sequencialCompra: string;
   orgaoEntidade: {
+    cnpj: string;
     razaoSocial: string;
   };
   unidadeOrgao: {
@@ -27,6 +31,7 @@ export interface ContratacoesPageProps {
 }
 
 export function TablePage({ contratacoes, error }: ContratacoesPageProps) {
+
   if (error) {
     return <div><p>Erro ao carregar dados: {error}</p></div>;
   }
@@ -50,7 +55,7 @@ export function TablePage({ contratacoes, error }: ContratacoesPageProps) {
         </thead>
         <tbody>
           {contratacoes.map((contratacao, index) => (
-            <tr key={index} className="border-b">
+            <tr key={index} className="border-b cursor-pointer">
               <td className="py-2 px-4 border-r">{contratacao.numeroControlePNCP}</td>
               <td className="py-2 px-4 border-r">{contratacao.modalidadeId}</td>
               <td className="py-2 px-4 border-r">{contratacao.modalidadeNome}</td>
@@ -59,7 +64,8 @@ export function TablePage({ contratacoes, error }: ContratacoesPageProps) {
               <td className="py-2 px-4 border-r">{new Date(contratacao.dataInclusao).toLocaleDateString()}</td>
               <td className="py-2 px-4 border-r">{new Date(contratacao.dataEncerramentoProposta).toLocaleDateString()}</td>
               <td className="py-2 px-4 border-r">{contratacao.unidadeOrgao.nomeUnidade}</td>
-              <td className="py-2 px-4 border-r w-1/6">{contratacao.usuarioNome}</td>
+              <td className="py-2 px-4 border-r">{contratacao.usuarioNome}</td>
+              <td><Link href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&ano=${contratacao.anoCompra}`}>Detalhes</Link></td>
             </tr>
           ))}
         </tbody>
