@@ -44,6 +44,7 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
   const [contractItems, setContractItems] = useState<TablePageContractItemProps[]>([]);
   const [loadingContractItems, setLoadingContractItems] = useState(true);
   const [errorContractItems, setErrorContractItems] = useState<string | null>(null);
+  const [downloadLink, setDownloadLink] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchContractItems = async () => {
@@ -51,10 +52,10 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
       setErrorContractItems(null);
 
       try {
-        const response = await axios.get(
-          `https://pncp.gov.br/api/pncp/v1/orgaos/${params.cnpj}/compras/${searchParams.ano}/${searchParams.sequencial}/itens`
-        );
-        
+        const itemsUrl = `https://pncp.gov.br/api/pncp/v1/orgaos/${params.cnpj}/compras/${searchParams.ano}/${searchParams.sequencial}/itens`;
+        const downloadUrl = `https://pncp.gov.br/api/pncp/v1/orgaos/${params.cnpj}/compras/${searchParams.ano}/${searchParams.sequencial}/arquivos/1`;
+
+        const response = await axios.get(itemsUrl);
         console.log('Response Data:', response.data);
 
         const data = response.data;
@@ -64,6 +65,7 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
         } else {
           throw new Error('Data is not in the expected format');
         }
+        setDownloadLink(downloadUrl);
 
       } catch (error) {
         console.error('Erro ao buscar itens do contrato:', error);
@@ -77,11 +79,15 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
   }, [params.cnpj, searchParams.ano, searchParams.sequencial]);
 
   return (
-    <div>
-      <h1>Detalhes do Contrato</h1>
-      <h2>CNPJ: {params.cnpj} | Sequencial: {searchParams.sequencial} | Ano: {searchParams.ano}</h2>
-
-      <h2>Itens do Contrato</h2>
+    <div className='ml-4 mt-4'>
+      <h1 className='inline mr-2 font-bold'>Link para baixar arquivo:</h1>
+      {downloadLink ? (
+        <a className='underline text-blue-600' href={downloadLink} download>Baixar arquivo</a>
+      ) : (
+        <p>Carregando link de download...</p>
+      )}
+      
+      <h2>Itens:</h2>
       {loadingContractItems && <p>Carregando itens do contrato...</p>}
       {errorContractItems && <p>{errorContractItems}</p>}
       {!loadingContractItems && !errorContractItems && (
@@ -91,11 +97,12 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
           ) : (
             <ul>
               {contractItems.map((item, index) => (
-                <li key={item.numeroItem || index}>
-                  <p><strong>Descrição:</strong> {item.descricao}</p>
-                  <p><strong>Valor Unitário Estimado:</strong> {item.valorUnitarioEstimado}</p>
+                <li key={item.numeroItem || index} className='mb-4'>
+                  <p><strong>Número do item:</strong> {item.numeroItem}</p>
                   <p><strong>Quantidade:</strong> {item.quantidade}</p>
+                  <p><strong>Valor Unitário:</strong> {item.valorUnitarioEstimado}</p>
                   <p><strong>Valor Total:</strong> {item.valorTotal}</p>
+                  <p><strong>Descrição:</strong> {item.descricao}</p>
                 </li>
               ))}
             </ul>
