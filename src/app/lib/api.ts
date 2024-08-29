@@ -1,26 +1,33 @@
 import axios, { AxiosError } from 'axios';
-import { addDays, format } from 'date-fns';
+import { addDays, format, isSaturday, isSunday } from 'date-fns';
 import { Contratacao } from '@/components/contratacoes';
 
-// Função para obter a data final padrão (um dia após a data atual)
+const getNextBusinessDay = (date: Date): Date => {
+  let nextDay = addDays(date, 1);
+
+  if (isSaturday(nextDay)) {
+    nextDay = addDays(nextDay, 2);
+  } else if (isSunday(nextDay)) {
+    nextDay = addDays(nextDay, 1);
+  }
+
+  return nextDay;
+};
+
 const getDefaultEndDate = (): string => {
   const today = new Date();
-  const tomorrow = addDays(today, 1);
-  return format(tomorrow, 'yyyyMMdd'); 
+  const nextBusinessDay = getNextBusinessDay(today);
+  return format(nextBusinessDay, 'yyyyMMdd');
 };
 
 export const fetchContracts = async (
   page: number = 1,
   size: number = 10,
   retries = 3,
-  filters?: { usuarioNome?: string; modalidadeNome?: string; dataFinal?: string; uf?: string }
+  filters?: { dataFinal?: string; uf?: string }
 ): Promise<{ data: Contratacao[]; totalPages: number }> => {
-
-  // Usa os filtros passados ou define valores padrão
   const dataFinal = filters?.dataFinal || getDefaultEndDate();
-  const codigoModalidadeContratacao = filters?.modalidadeNome || '8';
-  const usuarioNome = filters?.usuarioNome || 'Compras.gov.br';
-  const uf = filters?.uf || 'df'; // Adiciona UF
+  const uf = filters?.uf || 'df';
 
   try {
     const response = await axios.get(
@@ -28,8 +35,7 @@ export const fetchContracts = async (
       {
         params: {
           dataFinal: dataFinal,
-          codigoModalidadeContratacao: codigoModalidadeContratacao,
-          usuarioNome: usuarioNome,
+          codigoModalidadeContratacao: '8',
           uf: uf,
           pagina: page,
           tamanhoPagina: size,

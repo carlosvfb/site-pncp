@@ -1,5 +1,3 @@
-'use client';
-
 import { ApiProvider } from './context/ApiContext';
 import { ContratacoesPage } from '@/components/contratacoes';
 

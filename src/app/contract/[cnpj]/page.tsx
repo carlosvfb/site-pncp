@@ -6,28 +6,9 @@ import axios from 'axios';
 interface TablePageContractItemProps {
   numeroItem: number;
   descricao: string;
-  materialOuServico: string;
-  materialOuServicoNome: string;
   valorUnitarioEstimado: number;
   valorTotal: number;
   quantidade: number;
-  unidadeMedida: string;
-  orcamentoSigiloso: boolean;
-  itemCategoriaId: number;
-  itemCategoriaNome: string;
-  patrimonio: string;
-  codigoRegistroImobiliario: string;
-  criterioJulgamentoId: number;
-  criterioJulgamentoNome: string;
-  situacaoCompraItem: number;
-  situacaoCompraItemNome: string;
-  tipoBeneficio: number;
-  tipoBeneficioNome: string;
-  incentivoProdutivoBasico: boolean;
-  dataInclusao: string;
-  dataAtualizacao: string;
-  temResultado: boolean;
-  imagem: number;
 }
 
 interface Props {
