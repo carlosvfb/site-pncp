@@ -6,16 +6,13 @@ import Filter from './filter';
 
 export interface Contratacao {
     numeroControlePNCP: string;
-    modalidadeId: number;
-    modalidadeNome: string;
     numeroCompra: string;
     anoCompra: number;
     orgaoEntidade: {
-      razaoSocial: string;
       cnpj: string;
     };
-    dataInclusao: string;
     dataEncerramentoProposta: string;
+    objetoCompra:string;
     unidadeOrgao: {
       codigoUnidade: string;
       nomeUnidade: string;
@@ -46,12 +43,12 @@ export function ContratacoesPage() {
       <table className="min-w-full border border-gray-200 table-auto">
         <thead className="bg-gray-700 text-white">
           <tr>
-            <th className="py-2 px-4 border-r">Código da Unidade</th>
-            <th className="py-2 px-4 border-r">Nome da Unidade</th>
-            <th className="py-2 px-4 border-r">Número da Compra</th>
-            <th className="py-2 px-4 border-r">Data de Encerramento da Proposta</th>
-            <th className="py-2 px-4 border-r">Fonte</th>
-            <th className="py-2 px-4 border-r">Nome da Modalidade</th>
+            <th className="py-2 px-4 border-r">Código do Órgão</th>
+            <th className="py-2 px-4 border-r">Nome do Órgão</th>
+            <th className="py-2 px-4 border-r">Número da Contratação</th>
+            <th className="py-2 px-4 border-r">Data de Enc.</th>
+            <th className="py-2 px-4 border-r">Portal</th>
+            <th className="py-2 px-4 border-r">Descrição</th>
             <th className="py-2 px-4 border-r">Detalhes</th>
           </tr>
         </thead>
@@ -63,7 +60,7 @@ export function ContratacoesPage() {
               <td className="py-2 px-4 border-r">{contratacao.numeroCompra}/{contratacao.anoCompra}</td>
               <td className="py-2 px-4 border-r">{new Date(contratacao.dataEncerramentoProposta).toLocaleDateString()}</td>
               <td className="py-2 px-4 border-r">{contratacao.usuarioNome}</td>
-              <td className="py-2 px-4 border-r">{contratacao.modalidadeNome}</td>
+              <td className="py-2 px-4 border-r">{contratacao.objetoCompra}</td>
               <td>
                 <a 
                   href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&ano=${contratacao.anoCompra}`} target='_blank'
