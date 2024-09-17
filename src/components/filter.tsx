@@ -55,7 +55,7 @@ const Filter: React.FC<FilterProps> = ({ onApplyFilters }) => {
   return (
     <div className="mb-4">
       <div className="mb-2 flex gap-2 items-center">
-        <label htmlFor="uf" className="text-lg font-bold text-blue-500">UF:</label>
+        <label htmlFor="uf" className="text-lg font-bold text-white">UF:</label>
         <input
           type="text"
           name="uf"
@@ -68,7 +68,7 @@ const Filter: React.FC<FilterProps> = ({ onApplyFilters }) => {
         />
       </div>
       <div className="mb-2 flex gap-2 items-center">
-        <label htmlFor="dataFinal" className="text-lg font-bold text-blue-500">Data Final:</label>
+        <label htmlFor="dataFinal" className="text-lg font-bold text-white">Data Final:</label>
         <input
           type="text"
           name="dataFinal"
@@ -80,7 +80,7 @@ const Filter: React.FC<FilterProps> = ({ onApplyFilters }) => {
           maxLength={8}
         />
       </div>
-      <button type="button" onClick={handleApply} className="px-4 py-2 bg-blue-500 text-white rounded-md">Aplicar Filtros</button>
+      <button type="button" onClick={handleApply} className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-indigo-700 transition-colors">Filtrar</button>
     </div>
   );
 };
