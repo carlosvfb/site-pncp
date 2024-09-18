@@ -337,6 +337,7 @@ const Error500: React.FC = () => {
   </svg>
 
   <h1 className="error-title">
+    Internal Server Error <br/><br/>
     Ops! <br/>Algo deu errado :(
   </h1>
   <h2 className="error-subtitle">
