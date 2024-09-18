@@ -3,6 +3,7 @@
 import { useApi } from '../app/context/ApiContext';
 import Pagination from './pagination';
 import Filter from './filter';
+import Error500 from '@/app/500';
 
 export interface Contratacao {
   numeroControlePNCP: string;
@@ -29,12 +30,12 @@ export function ContratacoesPage() {
     setCurrentPage(1);
   };
 
+  if (error && error.includes('500')) {
+    return <Error500 />;
+  }
+
   if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <p className="text-red-500 font-semibold">Erro ao carregar dados: {error}</p>
-      </div>
-    );
+    return <Error500 />
   }
 
   return (
@@ -82,25 +83,25 @@ export function ContratacoesPage() {
             <tbody className="bg-white divide-y divide-gray-200">
               {contracts.map((contratacao) => (
                 <tr key={contratacao.numeroControlePNCP} className="hover:bg-gray-50">
-                  <td className="py-4 px-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm font-medium text-gray-900">
                     {contratacao.unidadeOrgao.codigoUnidade}
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {contratacao.unidadeOrgao.nomeUnidade}
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {contratacao.numeroCompra}/{contratacao.anoCompra}
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {new Date(contratacao.dataEncerramentoProposta).toLocaleDateString()}
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {contratacao.usuarioNome}
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {contratacao.objetoCompra}
                   </td>
-                  <td className="py-4 px-4 text-sm font-medium text-right whitespace-nowrap">
+                  <td className="py-4 px-4 text-sm font-medium text-right">
                     <a href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&ano=${contratacao.anoCompra}`} target='_blank' className="text-indigo-600 hover:text-indigo-900 hover:underline">
                       Detalhes
                     </a>
