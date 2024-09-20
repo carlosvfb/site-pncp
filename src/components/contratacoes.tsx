@@ -12,6 +12,7 @@ export interface Contratacao {
   orgaoEntidade: {
     cnpj: string;
   };
+  dataInclusao: string;
   dataEncerramentoProposta: string;
   objetoCompra: string;
   unidadeOrgao: {
@@ -29,10 +30,6 @@ export function ContratacoesPage() {
     setFilters(newFilters);
     setCurrentPage(1);
   };
-
-  if (error && error.includes('500')) {
-    return <Error500 />;
-  }
 
   if (error) {
     return <Error500 />
@@ -67,6 +64,9 @@ export function ContratacoesPage() {
                   Número da Contratação
                 </th>
                 <th className="py-3 px-4 text-left font-medium uppercase text-sm tracking-wider border-r border-gray-700">
+                  Data de Inclusão
+                </th>
+                <th className="py-3 px-4 text-left font-medium uppercase text-sm tracking-wider border-r border-gray-700">
                   Data de Enc.
                 </th>
                 <th className="py-3 px-4 text-left font-medium uppercase text-sm tracking-wider border-r border-gray-700">
@@ -93,6 +93,9 @@ export function ContratacoesPage() {
                     {contratacao.numeroCompra}/{contratacao.anoCompra}
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-500">
+                    {new Date(contratacao.dataInclusao).toLocaleDateString()}
+                  </td>
+                  <td className="py-4 px-4 text-sm text-gray-500">
                     {new Date(contratacao.dataEncerramentoProposta).toLocaleDateString()}
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-500">
@@ -102,7 +105,7 @@ export function ContratacoesPage() {
                     {contratacao.objetoCompra}
                   </td>
                   <td className="py-4 px-4 text-sm font-medium text-right">
-                    <a href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&ano=${contratacao.anoCompra}`} target='_blank' className="text-indigo-600 hover:text-indigo-900 hover:underline">
+                    <a href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&numero=${contratacao.numeroCompra}&ano=${contratacao.anoCompra}&dataInclusao=${contratacao.dataInclusao}&dataEncerramento=${contratacao.dataEncerramentoProposta}&unidade=${contratacao.unidadeOrgao.codigoUnidade}`} target='_blank' className="text-indigo-600 hover:text-indigo-900 hover:underline">
                       Detalhes
                     </a>
                   </td>

@@ -18,6 +18,10 @@ interface Props {
   searchParams: {
     sequencial: string;
     ano: string;
+    numero: string;
+    dataInclusao: string;
+    dataEncerramento: string;
+    unidade: string;
   };
 }
 
@@ -60,13 +64,20 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
   }, [params.cnpj, searchParams.ano, searchParams.sequencial]);
 
   return (
-    <div className='ml-4 mt-4'>
-      <h1 className='inline mr-2 font-bold'>Link para baixar arquivo:</h1>
-      {downloadLink ? (
-        <a className='underline text-blue-600' href={downloadLink} download>Baixar arquivo</a>
-      ) : (
-        <p>Carregando link de download...</p>
-      )}
+    <div className='ml-4 mt-4 flex flex-col gap-8'>
+      <h1 className='text-3xl font-bold'>Detalhes do Contrato N° {searchParams.numero}/{searchParams.ano}</h1>
+      <p><strong>Unidade:</strong> {searchParams.unidade}</p>
+      <p><strong>Data de inclusão:</strong> {new Date(searchParams.dataInclusao).toLocaleString()}</p>
+      <p><strong>Data de encerramento:</strong> {new Date(searchParams.dataEncerramento).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</p>
+      <div>
+        <p className='inline mr-2 font-bold'>Link para baixar arquivo:</p>
+        {downloadLink ? (
+          <a className='underline text-blue-600' href={downloadLink} download>Baixar arquivo</a>
+        ) : (
+          <p>Carregando link de download...</p>
+        )}
+      </div>
+        
       
       <h2>Itens:</h2>
       {loadingContractItems && <p>Carregando itens do contrato...</p>}
@@ -77,8 +88,8 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
             <p>Nenhum item encontrado.</p>
           ) : (
             <ul>
-              {contractItems.map((item, index) => (
-                <li key={item.numeroItem || index} className='mb-4'>
+              {contractItems.map((item) => (
+                <li key={item.numeroItem} className='mb-4'>
                   <p><strong>Número do item:</strong> {item.numeroItem}</p>
                   <p><strong>Quantidade:</strong> {item.quantidade}</p>
                   <p><strong>Valor Unitário:</strong> {item.valorUnitarioEstimado}</p>
