@@ -22,6 +22,7 @@ interface Props {
     dataInclusao: string;
     dataEncerramento: string;
     unidade: string;
+    orgao: string;
   };
 }
 
@@ -66,7 +67,7 @@ export default function ContractDetailPage({ params, searchParams }: Props) {
   return (
     <div className='ml-4 mt-4 flex flex-col gap-8'>
       <h1 className='text-3xl font-bold'>Detalhes do Contrato N° {searchParams.numero}/{searchParams.ano}</h1>
-      <p><strong>Unidade:</strong> {searchParams.unidade}</p>
+      <p><strong>Unidade:</strong> {searchParams.unidade} - {searchParams.orgao}</p>
       <p><strong>Data de inclusão:</strong> {new Date(searchParams.dataInclusao).toLocaleString()}</p>
       <p><strong>Data de encerramento:</strong> {new Date(searchParams.dataEncerramento).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</p>
       <div>

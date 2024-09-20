@@ -11,6 +11,7 @@ export interface Contratacao {
   anoCompra: number;
   orgaoEntidade: {
     cnpj: string;
+    razaosocial: string;
   };
   dataInclusao: string;
   dataEncerramentoProposta: string;
@@ -105,7 +106,7 @@ export function ContratacoesPage() {
                     {contratacao.objetoCompra}
                   </td>
                   <td className="py-4 px-4 text-sm font-medium text-right">
-                    <a href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&numero=${contratacao.numeroCompra}&ano=${contratacao.anoCompra}&dataInclusao=${contratacao.dataInclusao}&dataEncerramento=${contratacao.dataEncerramentoProposta}&unidade=${contratacao.unidadeOrgao.codigoUnidade}`} target='_blank' className="text-indigo-600 hover:text-indigo-900 hover:underline">
+                    <a href={`/contract/${contratacao.orgaoEntidade.cnpj}?sequencial=${contratacao.sequencialCompra}&numero=${contratacao.numeroCompra}&ano=${contratacao.anoCompra}&dataInclusao=${contratacao.dataInclusao}&dataEncerramento=${contratacao.dataEncerramentoProposta}&unidade=${contratacao.unidadeOrgao.codigoUnidade}&orgao=${contratacao.orgaoEntidade.razaosocial}`} target='_blank' className="text-indigo-600 hover:text-indigo-900 hover:underline">
                       Detalhes
                     </a>
                   </td>
